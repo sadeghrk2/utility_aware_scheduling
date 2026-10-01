@@ -103,6 +103,8 @@ def UtilityFunction(i,j,t):
             rw = 0
         elif (t+j) % priods[i] <= c[i]:
             rw = utility[i]
+        else:
+            rw = 0
     elif utilityMod == 2:
         if (t+j) // priods[i] > t // priods[i] or (t+j) % priods[i] > deadline[i]:
             rw = 0
