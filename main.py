@@ -6,7 +6,7 @@ from sklearn.tree import DecisionTreeClassifier
 from decimal import Decimal, getcontext
 getcontext().prec = 3
 
-num_tasks = 6
+num_tasks = 8
 divisors = [1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 16, 20, 24, 25, 30, 40]
 #L = .4
 #B = .6
@@ -101,7 +101,7 @@ def UtilityFunction(i,j,t):
     elif utilityMod == 1:
         if (t+j) // priods[i] > t // priods[i] or (t+j) % priods[i] > deadline[i]:
             rw = 0
-        elif (t+j) % priods[i] <= c[i]:
+        elif (t+j) % priods[i] <= deadline[i]:
             rw = utility[i]
         else:
             rw = 0
