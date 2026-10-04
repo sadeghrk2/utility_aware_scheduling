@@ -1,0 +1,104 @@
+import numpy as np
+import random
+import matplotlib.pyplot as plt
+
+fl = open('results_8_2400_highload2.log', 'r')
+#fl.readline()
+EDF = []
+RM = []
+UPA = []
+greedy = []
+randDT = []
+prioDT = []
+pseudo = []
+reducedMDP = []
+improvedMDP = []
+
+for i in range(100):
+    line = fl.readline()
+
+    row = []
+    r = line.split()[0]
+    r = float(r.split('[')[1].split(',')[0])
+    row.append(r)
+    for i in range(1,8):
+        r = float(line.split()[i].split(',')[0])
+        row.append(r)
+    r = float(line.split()[8].split(']')[0])
+    row.append(r)
+    
+    greedy.append(row[0])
+    pseudo.append(row[1])
+    UPA.append(row[2])    
+    randDT.append(row[3])
+    prioDT.append(row[4])
+    EDF.append(row[5])
+    RM.append(row[6])
+    reducedMDP.append(row[7])
+    improvedMDP.append(row[8])
+
+greedyst = np.zeros(100)
+randDTst = np.zeros(100)
+prioDTst = np.zeros(100)
+reducedMDPst = np.zeros(100)
+improvedMDPst = np.zeros(100)
+upast = np.zeros(100)
+pseudost = np.zeros(100)
+EDFst = np.zeros(100)
+RMst = np.zeros(100)
+
+for i in range(100):
+	for r1 in greedy:
+		if r1 > i * .01:
+			greedyst[i] += .01
+	for r2 in randDT:
+		if r2 > i * .01:
+			randDTst[i] += .01
+	for r3 in prioDT:
+		if r3 > i * .01:
+			prioDTst[i] += .01
+	for r4 in reducedMDP:
+		if r4 > i * .01:
+			reducedMDPst[i] += .01
+	for r5 in improvedMDP:
+		if r5 > i * .01:
+			improvedMDPst[i] += .01
+	for r6 in UPA:
+		if r6 > i * .01:
+			upast[i] += .01
+	for r7 in pseudo:
+		if r7 > i * .01:
+			pseudost[i] += .01
+	for r8 in EDF:
+		if r8 > i * .01:
+			EDFst[i] += .01
+	for r9 in RM:
+		if r9 > i * .01:
+			RMst[i] += .01
+
+xx = []
+for i in range(100):
+	xx.append(i*.01)
+
+#yy = [2,4,6,1]
+
+plt.plot(xx,greedyst, label = "greedy")
+plt.plot(xx, randDTst, label = "DT")
+plt.plot(xx,upast, label = "UPA")
+plt.plot(xx,prioDTst, label = "prioritized DT")
+plt.plot(xx,improvedMDPst, label = "prioritized MDP")
+plt.plot(xx,reducedMDPst, label = "reduced MDP")
+plt.plot(xx,pseudost, label = "pseudo 0")
+plt.plot(xx,EDFst, label = "EDF")
+plt.plot(xx,RMst, label = "RM")
+
+#plt.title(" a title! ")
+
+
+plt.xlabel('Fraction of Optimal')
+plt.ylabel('Fraction of Experiments')
+
+plt.legend()
+plt.show()
+
+#print(row)
